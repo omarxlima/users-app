@@ -6,12 +6,17 @@
 
 
     <div class="login-box">
-        <div class="login-logo"> <a href="../index2.html"><b>Admin</b>LTE</a> </div> <!-- /.login-logo -->
+        <div class="login-logo"> <a href=" {{ route('login') }}"><b>Admin</b>LTE</a> </div> <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
                 <form action="{{route('login')}}" method="post">
                     @csrf
+                    @session('status')
+                    <div class="alert alert-success" role="alert">
+                        {{ $value }}
+                      </div>
+                    @endsession
                     <div class="input-group mb-3"> 
                         <div class="input-group-text"> <span class="bi bi-envelope"></span> </div>
                         <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email') }}">
@@ -33,8 +38,8 @@
                     </div> <!--end::Row-->
                 </form>
                 
-                <p class="mb-1"> <a href="#">I forgot my password</a> </p>
-                <p class="mb-0"> <a href="{{ route('register') }}" class="text-center">
+                <p class="mb-1 text-center"> <a href="{{ route('password.request') }}">I forgot my password</a> </p>
+                <p class="mb-0 text-center" > <a href="{{ route('register') }}" class="text-center">
                         Register a new membership
                     </a> </p>
             </div> <!-- /.login-card-body -->

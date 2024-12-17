@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="register-box">
-    <div class="register-logo"> <a href="../index2.html"><b>Admin</b>LTE</a> </div> <!-- /.register-logo -->
+    <div class="register-logo"> <a href="{{ route('login') }}"><b>Admin</b>LTE</a> </div> <!-- /.register-logo -->
     <div class="card">
         <div class="card-body register-card-body">
             <p class="register-box-msg">Register a new membership</p>
@@ -50,8 +50,8 @@
                 <!--end::Row-->
             </form>
 
-            <p class="mb-0 text-center"> <a href="login.html" class="text-center">
-                    I already have a membership
+            <p class="mb-0 text-center"> <a href=" {{ route('login') }} " class="text-center">
+                    Back to login
                 </a> </p>
         </div> <!-- /.register-card-body -->
     </div>
