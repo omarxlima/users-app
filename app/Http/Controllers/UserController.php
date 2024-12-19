@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
+use App\Models\UserProfile;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -27,6 +29,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        $user->load('profile');
         return view('users.edit', compact('user'));
     }
 
@@ -34,6 +37,16 @@ class UserController extends Controller
     {
         $user->update($request->validated());
         return to_route('users.index')->with('status', 'Usuário editado com sucesso!');
+
+    }
+
+    public function updateProfile(ProfileUpdateRequest $request, User $user)
+    {
+        $user->profile()->updateOrCreate([
+            'user_id'=> $user->id],
+            $request->validated());
+
+        return to_route('users.index')->with('status', 'Perfil editado com sucesso!');
 
     }
 
