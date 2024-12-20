@@ -7,5 +7,7 @@
         @include('users.parts.basic-details')
         <br/>
         @include('users.parts.perfil')
+        <br/>
+        @include('users.parts.interest')
 
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InterestUpdateRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
@@ -29,7 +30,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $user->load('profile');
+        $user->load('profile', 'interests');
         return view('users.edit', compact('user'));
     }
 
@@ -46,6 +47,16 @@ class UserController extends Controller
             'user_id'=> $user->id],
             $request->validated());
 
+        return to_route('users.index')->with('status', 'Perfil editado com sucesso!');
+
+    }
+
+    public function updateInterest(InterestUpdateRequest $request, User $user)
+    {
+        $user->interests()->delete();
+        if (!empty($request->validated()['interests'])) {
+            $user->interests()->createMany($request->validated()['interests']);
+        }
         return to_route('users.index')->with('status', 'Perfil editado com sucesso!');
 
     }
