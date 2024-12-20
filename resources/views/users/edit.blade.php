@@ -8,6 +8,8 @@
         <br/>
         @include('users.parts.perfil')
         <br/>
+        @include('users.parts.roles')
+        <br/>
         @include('users.parts.interest')
 
 @endsection

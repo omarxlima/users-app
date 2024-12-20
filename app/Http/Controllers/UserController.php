@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InterestUpdateRequest;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\RolesUpdateRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
@@ -31,7 +33,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $user->load('profile', 'interests');
-        return view('users.edit', compact('user'));
+        $roles = Role::all();
+        return view('users.edit', compact('user', 'roles'));
     }
 
     public function update(UserUpdateRequest $request, User $user)
@@ -58,6 +61,15 @@ class UserController extends Controller
             $user->interests()->createMany($request->validated()['interests']);
         }
         return to_route('users.index')->with('status', 'Perfil editado com sucesso!');
+
+    }
+
+    public function updateRoles(RolesUpdateRequest $request, User $user)
+    {
+        // $user->roles()->attach($request->validated()['roles']);
+        $user->roles()->sync($request->validated()['roles']);
+
+        return to_route('users.index')->with('status', 'Cargo editado com sucesso!');
 
     }
 
