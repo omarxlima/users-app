@@ -27,12 +27,13 @@
         <div class="col-sm-4">
           <div class="input-group input-group-sm">
 
-            <input type="text" name="keyword" class="form-control" value="{{ request()?->keyword }}" placeholder="Pesquise por nome ou email">
-          
-            {{-- <imput type="reset" value="Reset"  > --}}
+            <input type="text" name="keyword" class="form-control" value="{{ request()?->keyword }}"
+              placeholder="Pesquisar">
+
+            {{-- <imput type="reset" value="Reset"> --}}
               {{-- <a type="reset" class="btn btn-secondary" aria-label="Reset">x</a> --}}
-          
-            <button class="btn btn-primary">Pesquisar</button>
+
+              <button class="btn btn-primary">Pesquisar</button>
 
           </div>
         </div>
@@ -40,6 +41,8 @@
     </form>
 
   </div>
+
+
   <table class="table">
     <thead>
       <tr>
@@ -59,11 +62,17 @@
         <td>
           <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <a href=" {{ route('users.edit', $user->id)}}" class="btn btn-outline-warning btn-sm">Editar</a>
+
+            @can('destroy', App\Models\User::class)
+
             <form action="{{ route('users.destroy', $user->id) }}" method="post">
               @csrf
               @method('DELETE')
               <button class="btn btn-outline-danger btn-sm" type="submit">Excluir</button>
             </form>
+            
+            @endcan
+
           </div>
 
         </td>

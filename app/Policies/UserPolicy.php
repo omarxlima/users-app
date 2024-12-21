@@ -13,4 +13,11 @@ class UserPolicy
     {
         //
     }
+
+    public function destroy(User $user)
+    {
+        return $user->roles()
+                    ->where('name', 'Administrador')
+                    ->exists();
+    }
 }

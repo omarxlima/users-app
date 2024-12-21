@@ -11,6 +11,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -34,6 +35,8 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        // Gate::authorize('edit', User::class);
+
         $user->load('profile', 'interests');
         $roles = Role::all();
         return view('users.edit', compact('user', 'roles'));
@@ -77,6 +80,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        Gate::authorize('destroy', User::class);
         $user->delete();
         return back()->with('status', 'Usuário excluído com sucesso!');
     }
