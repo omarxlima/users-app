@@ -14,8 +14,10 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index() {
-        $users = User::orderByDesc('created_at')->paginate(5);
+    public function index(Request $request) 
+    {
+        $users = User::search($request->keyword)
+                ->paginate();
         return view('users.index', compact('users'));
     }
 
